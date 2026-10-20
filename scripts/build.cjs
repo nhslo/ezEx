@@ -62,14 +62,7 @@ function archive(source, filename) {
   console.log("Packaged: " + destination);
 }
 
-const chromeDirectory = path.join(root, "dist", "chrome");
-const firefoxDirectory = path.join(root, "dist", "firefox");
-archive(chromeDirectory, "ezEx-" + version + "-Chrome-Brave-Vivaldi.zip");
-archive(chromeDirectory, "ezEx-" + version + "-Edge.zip");
-archive(chromeDirectory, "ezEx-" + version + "-Opera.zip");
-archive(firefoxDirectory, "ezEx-" + version + "-Firefox-AMO-upload.zip");
-archive(firefoxDirectory, "ezEx-" + version + "-Firefox-temporary.zip");
-fs.copyFileSync(
-  path.join(releaseDirectory, "ezEx-" + version + "-Firefox-temporary.zip"),
-  path.join(releaseDirectory, "ezEx-" + version + "-Firefox-temporary.xpi"),
-);
+// Chromium browsers share the same Manifest V3 build.
+archive(path.join(root, "dist", "chrome"), "ezEx-" + version + "-Chromium.zip");
+// Firefox requires Mozilla signing for permanent installation.
+archive(path.join(root, "dist", "firefox"), "ezEx-" + version + "-Firefox-unsigned.zip");
