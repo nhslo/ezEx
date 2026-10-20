@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ezEx · Teams + Google Forms</title>
+    <link rel="stylesheet" href="popup.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script src="theme.js"></script>
+  </head>
+  <body>
+    <main class="panel">
+      <header class="brand-row">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">e×</span>
+          <div>
+            <strong>ezEx</strong
+            ><span id="providerName">AI помощник · Teams + Google Forms</span>
+          </div>
+        </div>
+        <span class="badge" id="connection">Проверяю…</span>
+      </header>
+      <section class="form-card" aria-label="Открытый тест">
+        <div class="test-meta">
+          <span class="sparkle" aria-hidden="true">✳</span
+          ><span>ОТКРЫТЫЙ ТЕСТ</span
+          ><span id="questionCount" class="question-count">—</span>
+        </div>
+        <h1 id="formTitle" data-no-i18n>Откройте тест</h1>
+        <p class="muted" id="pageHint">
+          Откройте тест в Teams, Microsoft Forms или Google Forms
+        </p>
+      </section>
+      <section class="model-section">
+        <div class="label-row">
+          <label for="model">Модель</label
+          ><button
+            id="btnModels"
+            class="text-button"
+            type="button"
+            aria-label="Обновить список моделей"
+          >
+            Обновить список
+          </button>
+        </div>
+        <select id="model" aria-describedby="modelHint">
+          <option>Загрузка моделей…</option>
+        </select>
+        <p class="micro" id="modelHint"></p>
+      </section>
+      <button id="btnRun" class="primary" type="button">
+        <span>Заполнить тест</span
+        ><span class="run-icon" aria-hidden="true">↗</span>
+      </button>
+      <section class="feedback" aria-label="Результат">
+        <div class="status-line">
+          <span id="statusDot" class="status-dot" aria-hidden="true"></span
+          ><span id="status" role="status" aria-live="polite"
+            >Проверяю открытую вкладку…</span
+          >
+        </div>
+        <progress
+          id="progress"
+          max="1"
+          value="0"
+          aria-label="Обработка вопросов"
+          hidden
+        ></progress>
+        <p class="micro" id="resultDetail" data-no-i18n hidden></p>
+      </section>
+      <button id="btnApply" class="restore" type="button">
+        ↺ <span>Вставить сохранённые ответы</span>
+      </button>
+      <details class="advanced">
+        <summary>Ещё действия и настройки</summary>
+        <label class="switch-row"
+          ><span>Язык интерфейса</span
+          ><select id="uiLanguage" aria-label="Язык интерфейса">
+            <option value="auto">Авто (язык браузера)</option>
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+          </select></label
+        >
+        <label class="switch-row"
+          ><span>Тема оформления</span
+          ><select id="uiTheme" aria-label="Тема оформления">
+            <option value="auto">Как в браузере</option>
+            <option value="light">Светлая</option>
+            <option value="dark">Тёмная</option>
+          </select></label
+        >
+        <label class="switch-row"
+          ><span>Индикатор на странице</span
+          ><select id="indicatorMode" aria-label="Индикатор на странице">
+            <option value="normal">Обычный</option>
+            <option value="compact">Компактный</option>
+            <option value="off">Выключен</option>
+          </select></label
+        >
+        <label class="switch-row"
+          ><span>Автозапуск при открытии теста</span
+          ><input id="autoRun" type="checkbox" role="switch"
+        /></label>
+        <div class="small-actions">
+          <button id="btnSchema" type="button">Прочитать вопросы</button>
+          <button id="btnGenerate" type="button">Получить ответы</button>
+          <button id="btnRegenerate" type="button">Запросить заново</button>
+        </div>
+      </details>
+      <footer>
+        <span class="shortcuts"
+          ><kbd id="runShortcut">Ctrl Shift Y</kbd
+          ><span id="numpadHint">или Num5</span></span
+        >
+        <div>
+          <button
+            id="btnPause"
+            class="text-button"
+            type="button"
+            aria-pressed="false"
+          >
+            Пауза
+          </button>
+          <button
+            id="btnRefresh"
+            class="text-button"
+            type="button"
+            aria-label="Обновить состояние"
+          >
+            ↻</button
+          ><button id="btnOptions" class="text-button" type="button">
+            Настройки ↗
+          </button>
+        </div>
+      </footer>
+      <dl class="sr-only">
+        <dt>Ответов</dt>
+        <dd id="answersCount">—</dd>
+        <dt>Запросов</dt>
+        <dd id="requestCount">0</dd>
+      </dl>
+    </main>
+    <script src="shared.js"></script>
+    <script src="locale.js"></script>
+    <script src="ui.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

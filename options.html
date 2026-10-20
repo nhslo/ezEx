@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Настройки · ezEx</title>
+    <link rel="icon" type="image/png" sizes="48x48" href="icons/icon48.png" />
+    <link rel="stylesheet" href="options.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script src="theme.js"></script>
+  </head>
+  <body>
+    <main class="workspace">
+      <header class="page-header">
+        <a class="brand" href="options.html" aria-label="ezEx, настройки">
+          <span class="brand-mark" aria-hidden="true">e×</span
+          ><strong>ezEx</strong>
+        </a>
+        <a
+          class="back-link"
+          href="https://teams.cloud.microsoft/"
+          target="_blank"
+          rel="noreferrer"
+          >Открыть Teams ↗</a
+        >
+      </header>
+      <div class="intro">
+        <div>
+          <p class="eyebrow">НАСТРОЙКИ EZEX</p>
+          <h1>Подключи свою модель</h1>
+          <p>Один раз выбери AI — и возвращайся к тестам.</p>
+        </div>
+        <div class="privacy-note">
+          <span class="privacy-icon" aria-hidden="true">◆</span
+          ><span
+            ><strong>Твой ключ остаётся у тебя</strong
+            ><small>Хранится в этом браузере</small></span
+          >
+        </div>
+      </div>
+      <form id="settingsForm" class="settings">
+        <section class="card appearance-card" aria-label="Язык и оформление">
+          <div class="appearance-grid">
+            <div>
+              <label for="uiLanguage">Язык интерфейса</label>
+              <select id="uiLanguage">
+                <option value="auto">Авто (язык браузера)</option>
+                <option value="ru">Русский</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+            <div>
+              <label for="uiTheme">Тема оформления</label>
+              <select id="uiTheme">
+                <option value="auto">Как в браузере</option>
+                <option value="light">Светлая</option>
+                <option value="dark">Тёмная</option>
+              </select>
+            </div>
+          </div>
+          <p class="help">
+            Изменения применяются сразу. Авто использует язык и тему браузера.
+          </p>
+        </section>
+        <section class="card connection-card">
+          <div class="section-head">
+            <span class="section-icon" aria-hidden="true">✳</span>
+            <div>
+              <h2>Подключение</h2>
+              <p>Выбери сервис, ключ и модель</p>
+            </div>
+          </div>
+          <div class="connect-grid">
+            <div class="field">
+              <label for="provider">AI-сервис</label>
+              <select id="provider" aria-label="Провайдер AI">
+                <option value="gemini">Google Gemini</option>
+                <option value="openai">OpenAI API · ChatGPT</option>
+                <option value="anthropic">Anthropic Claude</option>
+                <option value="openrouter">
+                  OpenRouter · GPT, Claude, Gemini, DeepSeek и другие
+                </option>
+                <option value="groq">Groq</option>
+                <option value="deepseek">DeepSeek</option>
+                <option value="mistral">Mistral AI</option>
+                <option value="together">Together AI</option>
+                <option value="fireworks">Fireworks AI</option>
+                <option value="cerebras">Cerebras</option>
+                <option value="sambanova">SambaNova</option>
+                <option value="ollama">Ollama · локальные модели</option>
+                <option value="custom">Свой OpenAI-совместимый API</option>
+              </select>
+            </div>
+            <div class="field key-wrap">
+              <label id="baseUrlLabel" for="baseUrl" hidden>Адрес API</label>
+              <input
+                id="baseUrl"
+                type="url"
+                placeholder="https://api.example.com/v1 или http://localhost:11434/v1"
+                autocomplete="url"
+                hidden
+              />
+              <label for="apiKey">API-ключ</label>
+              <div class="key-field">
+                <input
+                  id="apiKey"
+                  type="password"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="Вставь ключ выбранного сервиса"
+                />
+                <button
+                  id="showKey"
+                  type="button"
+                  aria-label="Показать API-ключ"
+                  aria-pressed="false"
+                >
+                  Показать
+                </button>
+              </div>
+              <p id="keyHelp" class="help">
+                <a
+                  href="https://aistudio.google.com/apikey"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Получить ключ Google AI Studio ↗</a
+                >
+              </p>
+            </div>
+          </div>
+          <div class="model-panel">
+            <div class="label-row">
+              <div>
+                <label for="model">Модель</label
+                ><span class="field-caption">Можно найти по названию</span>
+              </div>
+              <button id="refreshModels" class="text-button" type="button">
+                <span aria-hidden="true">↻</span> Обновить список
+              </button>
+            </div>
+            <input
+              id="modelSearch"
+              type="search"
+              placeholder="Поиск в каталоге"
+              aria-label="Поиск модели"
+            />
+            <select id="model" aria-describedby="modelStatus">
+              <option>Загружаю список…</option>
+            </select>
+            <p id="modelStatus" class="help" role="status">
+              Предварительный список до подключения API-ключа.
+            </p>
+          </div>
+          <details id="manualModel" class="custom">
+            <summary>Указать ID модели вручную</summary>
+            <input
+              id="customModel"
+              type="text"
+              placeholder="Например, provider/model-name"
+              spellcheck="false"
+            />
+          </details>
+        </section>
+        <details class="card advanced-card">
+          <summary>
+            <span class="summary-icon" aria-hidden="true">☷</span
+            ><span
+              >Заполнение тестов<small>Пакеты, автозапуск и формат</small></span
+            >
+          </summary>
+          <div class="advanced-content">
+            <label class="check-row"
+              ><span
+                ><strong>Автоматический запуск</strong
+                ><small>После загрузки вопросов в открытой форме</small></span
+              ><input id="autoRun" type="checkbox" role="switch"
+            /></label>
+            <label class="check-row"
+              ><span
+                ><strong>Сохранять введённые ответы</strong
+                ><small>Повторная вставка заменит заполненные поля</small></span
+              ><input id="respectExistingAnswers" type="checkbox" role="switch"
+            /></label>
+            <label for="batchSize">Вопросов за один запрос</label>
+            <select id="batchSize">
+              <option value="10">10 · длинные вопросы</option>
+              <option value="20">20</option>
+              <option value="30" selected>30 · рекомендуется</option>
+              <option value="50">50 · меньше запросов</option>
+            </select>
+            <p class="help">
+              Для 61 вопроса при размере 30 уйдут части 30 + 30 + 1. Повторный
+              запуск берёт ответы из кэша.
+            </p>
+            <label for="customInstruction">Дополнительные указания</label>
+            <textarea
+              id="customInstruction"
+              rows="3"
+              maxlength="8000"
+              placeholder="Например: отвечай по-русски; для числовых ответов указывай только число."
+            ></textarea>
+            <p class="help">
+              Строгая структура и соответствие вариантов всё равно проверяются.
+            </p>
+            <label class="check-row"
+              ><span
+                ><strong>Дополнительная клавиша Ctrl+A</strong
+                ><small>Вне полей ввода заменяет выделение всего</small></span
+              ><input id="legacyCtrlA" type="checkbox"
+            /></label>
+            <label class="check-row"
+              ><span
+                ><strong>Диагностические сообщения</strong
+                ><small>Короткие сведения об ошибках в консоли</small></span
+              ><input id="debugLogs" type="checkbox"
+            /></label>
+            <p class="help">
+              Горячие клавиши можно изменить в блоке «Управление и индикатор».
+            </p>
+          </div>
+        </details>
+        <details class="card history-card">
+          <summary>
+            <span class="summary-icon" aria-hidden="true">◷</span
+            ><span>Мои тесты<small>Ответы для повторной вставки</small></span>
+            <span id="historyCount" class="count">0</span>
+          </summary>
+          <p id="historyEmpty" class="help">
+            Здесь появятся тесты после получения ответов.
+          </p>
+          <ul id="historyList"></ul>
+          <button id="clearHistory" class="text-button" type="button">
+            Очистить сохранённые ответы
+          </button>
+        </details>
+        <details class="card control-card">
+          <summary>
+            <span class="summary-icon" aria-hidden="true">⌨</span
+            ><span
+              >Управление и индикатор<small
+                >Свои клавиши, пауза и видимость на странице</small
+              ></span
+            >
+          </summary>
+          <div class="advanced-content">
+            <label class="check-row"
+              ><span
+                ><strong>Расширение работает</strong
+                ><small
+                  >Выключите, чтобы приостановить запросы, автозапуск и
+                  вставку</small
+                ></span
+              ><input id="enabled" type="checkbox" role="switch"
+            /></label>
+            <label for="indicatorMode">Индикатор на странице</label>
+            <select id="indicatorMode">
+              <option value="normal">Обычный · текст и ход работы</option>
+              <option value="compact">
+                Компактный · маленькая отметка без текста
+              </option>
+              <option value="off">
+                Выключен · состояние только в меню расширения
+              </option>
+            </select>
+            <p class="help">
+              Меняется сразу, в том числе во время выполнения. В компактном
+              режиме: ··· — работа, ✓ — готово, ! — ошибка.
+            </p>
+            <div class="shortcut-heading">
+              <h3>Горячие клавиши на Teams / Google Forms</h3>
+              <button id="resetShortcuts" type="button" class="text-button">
+                Сбросить
+              </button>
+            </div>
+            <p class="help">
+              Нажмите на поле и зажмите своё сочетание с Ctrl, Alt или ⌘.
+              Backspace очищает, Escape завершает ввод. Запуск не срабатывает
+              при вводе текста в форме.
+            </p>
+            <div class="shortcut-grid">
+              <label for="shortcutRun">Заполнить тест</label
+              ><input
+                id="shortcutRun"
+                data-shortcut-action="run"
+                type="text"
+                readonly
+                aria-label="Сочетание для заполнения теста"
+              />
+              <label for="shortcutSettings">Открыть настройки</label
+              ><input
+                id="shortcutSettings"
+                data-shortcut-action="settings"
+                type="text"
+                readonly
+                aria-label="Сочетание для настроек"
+              />
+              <label for="shortcutIndicator">Индикатор: скрыть / показать</label
+              ><input
+                id="shortcutIndicator"
+                data-shortcut-action="indicator"
+                type="text"
+                readonly
+                aria-label="Сочетание для индикатора"
+              />
+              <label for="shortcutPause">Пауза / продолжить</label
+              ><input
+                id="shortcutPause"
+                data-shortcut-action="pause"
+                type="text"
+                readonly
+                aria-label="Сочетание для паузы"
+              />
+              <label for="shortcutUninstall"
+                >Открыть подтверждение удаления</label
+              ><input
+                id="shortcutUninstall"
+                data-shortcut-action="uninstall"
+                type="text"
+                readonly
+                aria-label="Сочетание для подтверждения удаления"
+              />
+            </div>
+            <label class="check-row"
+              ><span
+                ><strong>Запуск клавишей Num5</strong
+                ><small>Без Ctrl, Alt и Shift; вне полей ввода</small></span
+              ><input id="numpadHotkey" type="checkbox" role="switch"
+            /></label>
+            <p class="help">
+              Пауза останавливает дальнейшую вставку и новые запросы. Уже
+              отправленный запрос может завершиться; полученные ответы
+              сохраняются.
+            </p>
+            <div class="toolbar-help">
+              <h3>Значок на панели браузера</h3>
+              <p class="help">
+                В меню расширений браузера уберите закрепление ezEx. Для
+                открытия меню можно использовать
+                <kbd id="popupShortcut">Alt + Shift + E</kbd>. Страница
+                управления расширениями продолжит показывать ezEx.
+              </p>
+              <button id="browserShortcuts" class="text-button" type="button">
+                Настроить клавиши браузера ↗
+              </button>
+            </div>
+            <div class="uninstall-row">
+              <div>
+                <strong>Удалить ezEx</strong>
+                <p class="help">
+                  Браузер попросит подтверждение. Удаление очистит настройки и
+                  сохранённые ответы расширения.
+                </p>
+              </div>
+              <button
+                id="uninstallExtension"
+                type="button"
+                class="danger-button"
+              >
+                Удалить…
+              </button>
+            </div>
+          </div>
+        </details>
+        <div class="save-bar">
+          <button id="saveButton" class="primary" type="submit">
+            Сохранить настройки <span aria-hidden="true">→</span>
+          </button>
+          <p id="status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+      <footer>
+        ezEx
+        <span
+          >Teams · Microsoft / Google Forms · Gemini · GPT · Claude ·
+          OpenRouter</span
+        >
+      </footer>
+    </main>
+    <script src="shared.js"></script>
+    <script src="locale.js"></script>
+    <script src="ui.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

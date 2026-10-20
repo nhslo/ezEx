@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="tile" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#168079" />
+      <stop offset="1" stop-color="#0c5555" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="32" fill="url(#tile)" />
+  <text x="64" y="82" fill="#fff" font-family="Segoe UI, Arial, sans-serif" font-size="66" font-weight="700" letter-spacing="-10" text-anchor="middle">e×</text>
+</svg>

@@ -1,0 +1,5 @@
+node_modules/
+dist/
+*.har
+*.log
+test-results/
