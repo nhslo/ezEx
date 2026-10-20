@@ -1,0 +1,33 @@
+name: Publish first ezEx release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/bootstrap-release.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  first-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+      - name: Publish v2.5.0 if missing
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v2.5.0 >/dev/null 2>&1; then
+            echo "v2.5.0 already published"
+          else
+            gh release create v2.5.0 dist/releases/*.zip --target "$GITHUB_SHA" --title "ezEx v2.5.0" --generate-notes
+          fi
